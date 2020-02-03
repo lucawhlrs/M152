@@ -5,7 +5,7 @@ require_once "functions.php";
 
 $uploaddir = 'tmp';
 $uploadfile = $uploaddir . basename($_FILES['pictures']['name']);
-var_dump($uploadfile);
+
 echo '<pre>';
 if (move_uploaded_file($_FILES['pictures']['tmp_name'], $uploadfile)) {
     echo "Le fichier est valide, et a été téléchargé
@@ -108,7 +108,7 @@ echo '</pre>';
                                                     <div class="modal-footer">
                                                         <div>
                                                             <input type="submit" value="Post" class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true"/>
-                                                            <ul class="pull-left list-inline"><li><!--<i class="glyphicon glyphicon-upload">--><input type="file" name="pictures[]" title="Import pictures" accept="image/png, image/jpeg"/></li></ul>
+                                                            <ul class="pull-left list-inline"><li><!--<i class="glyphicon glyphicon-upload">--><input type="file" name="pictures[]" title="Import pictures" accept="image/png, image/jpeg" multiple=""/></li></ul>
                                                         </div>	
                                                     </div>
                                                 </form>
@@ -182,19 +182,4 @@ echo '</pre>';
                 </div>
             </div>
         </div>
-
-        <script type="text/javascript" src="assets/js/jquery.js"></script>
-        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('[data-toggle=offcanvas]').click(function () {
-                    $(this).toggleClass('visible-xs text-center');
-                    $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
-                    $('.row-offcanvas').toggleClass('active');
-                    $('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
-                    $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
-                    $('#btnShow').toggle();
-                });
-            });
-        </script>
     </body></html>
