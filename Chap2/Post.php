@@ -108,7 +108,7 @@ echo '</pre>';
                                                     <div class="modal-footer">
                                                         <div>
                                                             <input type="submit" value="Post" class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true"/>
-                                                            <ul class="pull-left list-inline"><li><!--<i class="glyphicon glyphicon-upload">--><input type="file" name="pictures[]" title="Import pictures" accept="image/png, image/jpeg" multiple=""/></li></ul>
+                                                            <ul class="pull-left list-inline"><li><!--<i class="glyphicon glyphicon-upload">--><input type="file" name="pictures[]" title="Import pictures" accept="image/png, image/jpeg, image/gif" multiple="true"/></li></ul>
                                                         </div>	
                                                     </div>
                                                 </form>
