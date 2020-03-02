@@ -102,13 +102,17 @@ echo '</pre>';
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
+                                                            <textarea class="form-control input-lg" name="commentaire" autofocus="" placeholder="What do you want to share?"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <div>
                                                             <input type="submit" value="Post" class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true"/>
-                                                            <ul class="pull-left list-inline"><li><!--<i class="glyphicon glyphicon-upload">--><input type="file" name="pictures[]" title="Import pictures" accept="image/png, image/jpeg, image/gif" multiple="true"/></li></ul>
+                                                            <ul class="pull-left list-inline">
+                                                                <li><!--<i class="glyphicon glyphicon-upload">-->
+                                                                    <input type="file" name="pictures[]" title="Import pictures" accept="image/png, image/jpeg, image/gif" multiple="true"/>
+                                                                </li>
+                                                            </ul>
                                                         </div>	
                                                     </div>
                                                 </form>
@@ -138,47 +142,15 @@ echo '</pre>';
                                         </p>
                                     </div>
                                 </div>
-
                                 <hr>
-
                                 <h4 class="text-center">
                                     <a href="http://usebootstrap.com/theme/facebook" target="ext">Download this Template @Bootply</a>
                                 </h4>
-
                                 <hr>
-
-
-                            </div><!-- /col-9 -->
-                        </div><!-- /padding -->
-                    </div>
-                    <!-- /main -->
-
-                </div>
-            </div>
-        </div>
-
-
-        <!--post modal-->
-        <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
-                        Update Status
-                    </div>
-                    <div class="modal-body">
-                        <form class="form center-block">
-                            <div class="form-group">
-                                <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <div>
-                            <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-                            <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-                        </div>	
-                    </div>
+
                 </div>
             </div>
         </div>

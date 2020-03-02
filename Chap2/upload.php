@@ -1,43 +1,52 @@
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <meta charset="utf-8">
+        <title>Upload</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/facebook.css" rel="stylesheet">
+    </head>
+        
+</html>
+
 <?php
-echo '<pre>';
-var_dump($_FILES['pictures']);
-echo '</pre>';
+require_once 'functions.php';
+//echo '<pre>';
+//var_dump($_FILES['pictures']);
+//var_dump($_POST["commentaire"]);
+//echo '</pre>';
+
+
 $t = time();
-$uploaddir = "C:/Users/wohlersl/Desktop/EasyPHP-DevServer-14.1VC9/data/localweb/FacebookUpload/temporaire/";
+$ymd = date("Y-m-d_", $t);
+
+$commentaire = $_POST['commentaire'];
+$dateCreation = $ymd;
+$dateModification = $ymd;
+
+$typeMedia = "photo";
+$creationDateMedia = $ymd;
+$modificationDateMedia = $ymd;
+$nomMedia;
+
+$uploaddir = "C:/Users/wohlersl/Desktop/EasyPHP-DevServer-14.1VC9/data/localweb/FacebookUpload/ImagesPost/";
+
+addPost($commentaire, $dateCreation, $dateModification);
+$lastId = connexionDB()->lastInsertId();
 
 for ($index = 0; $index < count($_FILES['pictures']['name']); $index++) {
-    $_FILES['pictures']['name'][$index] = date("Y-m-d_", $t) . $t . $_FILES['pictures']['name'][$index];
+    $_FILES['pictures']['name'][$index] = $ymd . $t . $_FILES['pictures']['name'][$index];
+    $nomMedia = $_FILES['pictures']['name'][$index];
+      
+    
     $uploadfile = $uploaddir . basename($_FILES['pictures']['name'][$index]);
-    echo '<pre>';
+    
     if (move_uploaded_file($_FILES['pictures']['tmp_name'][$index], $uploadfile)) {
-        echo "Le fichier est valide, et a été téléchargé
-           avec succès. Voici plus d'informations :\n";
+        echo "Le fichier est valide, et a été téléchargé avec succès.";
+        addMedia($typeMedia, $nomMedia, $creationDateMedia, $modificationDateMedia, $lastId);
     } else {
-        echo "Attaque potentielle par téléchargement de fichiers.
-          Voici plus d'informations :\n";
+        echo "Attaque potentielle par téléchargement de fichiers.";
     }
-    echo '</pre>';
+    
 }
- /*
-$_FILES['pictures']['name'][0] = date("Y-m-d_",$t) . $t . $_FILES['pictures']['name'][0];
-$uploadfile = $uploaddir . basename($_FILES['pictures']['name'][0]);
-
-echo 'Voici uploadfile:';
-var_dump($uploadfile);
-echo "***";
-
-echo '<pre>';
-if (move_uploaded_file($_FILES['pictures']['tmp_name'][0], $uploadfile)) {
-    echo "Le fichier est valide, et a été téléchargé
-           avec succès. Voici plus d'informations :\n";
-} else {
-    echo "Attaque potentielle par téléchargement de fichiers.
-          Voici plus d'informations :\n";
-}
-*/
-echo '<pre>';
-echo 'Voici quelques informations de débogage :';
-print_r($_FILES);
-
-echo '</pre>';
-?>

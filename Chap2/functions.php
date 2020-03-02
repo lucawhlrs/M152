@@ -2,8 +2,8 @@
 function connexionDB() {
     $dbServer = "localhost";
     $dbName = "m152post";
-    $dbUser = "adminLuca";
-    $dbPwd = "Super";
+    $dbUser = "root";
+    $dbPwd = "";
 
     static $bdd = null;
 
@@ -14,6 +14,38 @@ function connexionDB() {
     return $bdd;
 }
 
+function createNewUser($firstName, $lastName, $email, $passwordHash) {
+	$conn = myPdo();
+	$query = $conn->prepare('INSERT INTO tbl_user (Nm_First, Nm_Last, Txt_Email, Txt_Password_Hash) VALUES (:firstName, :lastName, :email, :passwordHash)');
+	$query->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+	$query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+	$query->bindParam(':email', $email, PDO::PARAM_STR);
+	$query->bindParam(':passwordHash', $passwordHash, PDO::PARAM_STR);
+	$query->execute();
+}
+
+function addPost($commentaire, $dateCreation, $dateModification) {
+    $bdd = connexionDB();
+    $sql = "INSERT INTO post(commentaire, creationDate, modificationDate) values(:commentaire, :dateCreation, :dateModification)";
+    $request = $bdd->prepare($sql);
+    $request->execute(array(":commentaire" => $commentaire,
+                            ":dateCreation" => $dateCreation,
+                            ":dateModification" => $dateModification));
+    return $bdd->LastInsertID();
+ }
+ 
+ function addMedia($typeMedia, $nomMedia, $creationDateMedia, $modificationDateMedia, $idPost) {
+    $bdd = connexionDB();
+    $sql = "INSERT INTO media(typeMedia, nomMedia, creationDate, modificationDate, idPost) values(:typeMedia, :nomMedia, :creationDateMedia, :modificationDateMedia, :idPost)";
+    $request = $bdd->prepare($sql);
+    $request->execute(array(":typeMedia" => $typeMedia,
+                            ":nomMedia" => $nomMedia,
+                            ":creationDateMedia" => $creationDateMedia,
+                            ":modificationDateMedia" => $modificationDateMedia,
+                            ":idPost" => $idPost));
+    return $bdd->LastInsertID();
+ }
+ 
 function getAllUsers() {
     $bdd = connexionDB();
     $request = $bdd->query('SELECT * FROM Users ORDER BY idUser ASC');
@@ -32,15 +64,7 @@ function getFirstNameById($idUser) {
 }
 
 
-function addUser($firstName, $lastName, $idHobbie) {
-    $bdd = connexionDB();
-    $sql = "INSERT INTO Users(FirstName, LastName, idHobbie) values(:firstName, :lastName, :idHobbie)";
-    $request = $bdd->prepare($sql);
-    $request->execute(array(":firstName" => $firstName,
-                            ":lastName" => $lastName,
-                            ":idHobbie" => $idHobbie));
-    return $bdd->LastInsertID();
- }
+
 
  
  function userExists($firstName, $lastName, $idHobbie) {
