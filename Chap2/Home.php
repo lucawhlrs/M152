@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+require_once "functions.php";
+$posts = getAllPostsComm();
+?>
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
@@ -75,7 +79,8 @@
                                             <div class="panel-thumbnail"><img src="assets/img/bg_5.jpg" class="img-responsive"></div>
                                             <div class="panel-body">
                                                 <p class="lead">Urbanization</p>
-                                                <p>45 Followers, 13 Posts</p>
+
+                                                <p>45 Followers, <?= count($posts) ?> Posts</p>
 
                                                 <p>
                                                     <img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px">
@@ -85,17 +90,48 @@
                                     </div>
 
                                     <!-- main col right -->
-                                    <div class="col-sm-7">
-
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Description</h4></div>
-                                            <div class="panel-body">
-                                                <p>Welcome to my page</p>
-                                                <div class="clearfix"></div>
+                                    <div class="d-flex flex-column bd-highlight mb-3">
+                                        <?php
+                                        foreach ($posts as $unPost):
+                                            ?>
+                                            <div class="d-flex flex-column bd-highlight mb-3">
+                                                <div class="col-sm-7 p-2 bd-highlight">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Post du <?= $unPost["creationDate"] ?></h4></div>
+                                                        <div class="panel-body">
+                                                            <p><?= $unPost["commentaire"] ?></p>
+                                                            <div class="clearfix">
+                                                                <p>
+                                                                    <?php
+                                                                    $images = getMediaByIdPost($unPost["idPost"]);
+                                                                    if ($images == TRUE):
+                                                                        foreach ($images as $image):
+                                                                            ?>
+                                                                            <?php
+                                                                            $typeFinal = explode("/", $image["typeMedia"]);
+                                                                            
+                                                                            if ($typeFinal[0] == "video"): ?>
+                                                                                <video src="./ImagesPosts/<?= $image["nomMedia"] ?>" controls loop autoplay height="200"></video>;
+                                                                            <?php endif; ?>
+                                                                                
+                                                                            <?php if ($typeFinal[0] == "image"): ?>
+                                                                                <img src="./ImagesPosts/<?=$image["nomMedia"] ?>" height="200"></img>
+                                                                            <?php endif; ?>
+                                                                                
+                                                                            <?php if ($typeFinal[0] == "audio"): ?>
+                                                                                <audio src="./ImagesPosts/<?= $image["nomMedia"] ?>" controls height="200"></audio>
+                                                                            <?php endif; ?>
+                                                                        <?php endforeach; ?>
+                                                                    <?php endif; ?>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        <?php endforeach; ?>
                                     </div>
-                                </div><!--/row-->
+                                </div>
 
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -128,32 +164,6 @@
                     </div>
                     <!-- /main -->
 
-                </div>
-            </div>
-        </div>
-
-
-        <!--post modal-->
-        <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
-                        Update Status
-                    </div>
-                    <div class="modal-body">
-                        <form class="form center-block">
-                            <div class="form-group">
-                                <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <div>
-                            <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
-                            <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
-                        </div>	
-                    </div>
                 </div>
             </div>
         </div>

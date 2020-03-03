@@ -1,25 +1,6 @@
 <!DOCTYPE html>
 <?php
 require_once "functions.php";
-
-
-$uploaddir = 'tmp';
-$uploadfile = $uploaddir . basename($_FILES['pictures']['name']);
-
-echo '<pre>';
-if (move_uploaded_file($_FILES['pictures']['tmp_name'], $uploadfile)) {
-    echo "Le fichier est valide, et a été téléchargé
-           avec succès. Voici plus d'informations :\n";
-} else {
-    echo "Attaque potentielle par téléchargement de fichiers.
-          Voici plus d'informations :\n";
-}
-
-echo 'Voici quelques informations de débogage :';
-print_r($_FILES);
-
-echo '</pre>';
-
 ?>
 <html lang="en">
     <head>
@@ -28,9 +9,6 @@ echo '</pre>';
         <title>Facebook Theme Demo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="assets/css/bootstrap.css" rel="stylesheet">
-        <!--[if lt IE 9]>
-          <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
         <link href="assets/css/facebook.css" rel="stylesheet">
     </head>
 
@@ -91,7 +69,7 @@ echo '</pre>';
                                 <div class="row">
 
                                     <!-- main col left --> 
-                                    <div class="col-sm-5">
+                                    <div class="col-lg-7">
 
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -110,7 +88,7 @@ echo '</pre>';
                                                             <input type="submit" value="Post" class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true"/>
                                                             <ul class="pull-left list-inline">
                                                                 <li><!--<i class="glyphicon glyphicon-upload">-->
-                                                                    <input type="file" name="pictures[]" title="Import pictures" accept="image/png, image/jpeg, image/gif" multiple="true"/>
+                                                                    <input type="file" name="pictures[]" title="Import pictures" accept="image/*, video/*, audio/*" multiple="true"/>
                                                                 </li>
                                                             </ul>
                                                         </div>	

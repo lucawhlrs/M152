@@ -46,13 +46,27 @@ function addPost($commentaire, $dateCreation, $dateModification) {
     return $bdd->LastInsertID();
  }
  
-function getAllUsers() {
+function getAllPostsComm() {
     $bdd = connexionDB();
-    $request = $bdd->query('SELECT * FROM Users ORDER BY idUser ASC');
+    $request = $bdd->query('SELECT p.commentaire, p.creationDate, p.modificationDate, p.idPost FROM post as p ORDER BY p.creationDate DESC');
     $info = $request->fetchAll(PDO::FETCH_ASSOC);
     
     return $info;
 }
+
+function getMediaByIdPost($idPost){
+    $bdd = connexionDB();
+    $sql = "SELECT DISTINCT media.nomMedia, media.typeMedia, media.creationDate, media.modificationDate FROM media, post WHERE media.idPost = :idPost";
+    $request = $bdd->prepare($sql);
+    $request->execute(array(":idPost" => $idPost));
+    $event = $request->fetchAll(PDO::FETCH_ASSOC);
+    return $event;
+}
+
+
+
+
+
 
 function getFirstNameById($idUser) {
     $bdd = connexionDB();
