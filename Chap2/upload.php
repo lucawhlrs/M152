@@ -36,16 +36,29 @@ $nomMedia;
 
 $uploaddir = "./ImagesPosts/";
 
+
+
+//Verification de la taille total des fichiers fourni
+$fileSizeTotal = 0;
+for ($index = 0; $index < count($_FILES['pictures']['name']); $index++) {
+    $fileSizeTotal += $_FILES['pictures']['size'][$index];
+}
+if ($fileSizeTotal > 73400320) {
+    header('Location:Post.php');
+    exit();
+}
+
+//Ajout du commentaire
 addPost($commentaire, $dateCreation, $dateModification);
 $lastId = connexionDB()->lastInsertId();
 
+//Ajout d'image par image
 for ($index = 0; $index < count($_FILES['pictures']['name']); $index++) {
     $_FILES['pictures']['name'][$index] = $ymd . $t . $_FILES['pictures']['name'][$index];
     $nomMedia = $_FILES['pictures']['name'][$index];
     $typeMedia = $_FILES['pictures']['type'][$index];
     
     $uploadfile = $uploaddir . basename($_FILES['pictures']['name'][$index]);
-    
     if ($_FILES['pictures']['size'][$index] <= 3145728) {
         if (move_uploaded_file($_FILES['pictures']['tmp_name'][$index], $uploadfile)) {
             echo "Le fichier est valide, et a été téléchargé avec succès.";

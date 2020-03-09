@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <?php
 require_once "functions.php";
+
+$idPost = filter_input(INPUT_POST, 'idPost', FILTER_VALIDATE_INT);
+//Supprimer un post
+if (filter_input(INPUT_POST, 'supprimer')) {
+    if (is_numeric($idPost)){
+      // SUPPRIMER LE POST
+      delPost($idPost);
+    }    
+}
+
 $posts = getAllPostsComm();
 ?>
 <html lang="en">
@@ -109,21 +119,28 @@ $posts = getAllPostsComm();
                                                                             ?>
                                                                             <?php
                                                                             $typeFinal = explode("/", $image["typeMedia"]);
-                                                                            
-                                                                            if ($typeFinal[0] == "video"): ?>
+
+                                                                            if ($typeFinal[0] == "video"):
+                                                                                ?>
                                                                                 <video src="./ImagesPosts/<?= $image["nomMedia"] ?>" controls loop autoplay height="200"></video>;
                                                                             <?php endif; ?>
-                                                                                
+
                                                                             <?php if ($typeFinal[0] == "image"): ?>
-                                                                                <img src="./ImagesPosts/<?=$image["nomMedia"] ?>" height="200"></img>
+                                                                                <img src="./ImagesPosts/<?= $image["nomMedia"] ?>" height="200"></img>
                                                                             <?php endif; ?>
-                                                                                
+
                                                                             <?php if ($typeFinal[0] == "audio"): ?>
                                                                                 <audio src="./ImagesPosts/<?= $image["nomMedia"] ?>" controls height="200"></audio>
                                                                             <?php endif; ?>
                                                                         <?php endforeach; ?>
-                                                                    <?php endif; ?>
+                                                                <?php endif; ?>
                                                                 </p>
+                                                                <div id="delete<?= $unPost['idPost'] ?>" >
+                                                                    <form action="Home.php" method="POST">
+                                                                            <input type="hidden" name="idPost" value="<?= $unPost['idPost'] ?>" />
+                                                                            <input type="submit" name="supprimer" value="Supprimer" class="btn btn-primary"/>
+                                                                        </form>
+                                                                    </div>
                                                             </div>
                                                         </div>
                                                     </div>

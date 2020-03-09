@@ -14,16 +14,6 @@ function connexionDB() {
     return $bdd;
 }
 
-function createNewUser($firstName, $lastName, $email, $passwordHash) {
-	$conn = myPdo();
-	$query = $conn->prepare('INSERT INTO tbl_user (Nm_First, Nm_Last, Txt_Email, Txt_Password_Hash) VALUES (:firstName, :lastName, :email, :passwordHash)');
-	$query->bindParam(':firstName', $firstName, PDO::PARAM_STR);
-	$query->bindParam(':lastName', $lastName, PDO::PARAM_STR);
-	$query->bindParam(':email', $email, PDO::PARAM_STR);
-	$query->bindParam(':passwordHash', $passwordHash, PDO::PARAM_STR);
-	$query->execute();
-}
-
 function addPost($commentaire, $dateCreation, $dateModification) {
     $bdd = connexionDB();
     $sql = "INSERT INTO post(commentaire, creationDate, modificationDate) values(:commentaire, :dateCreation, :dateModification)";
@@ -63,6 +53,25 @@ function getMediaByIdPost($idPost){
     return $event;
 }
 
+function delPost($idPost){
+    $medias = getMediaByIdPost($idPost);
+    foreach ($medias as $media) {
+        unlink("./ImagesPosts/" . $media['nomMedia']);
+    }
+    
+    $bdd = connexionDB();
+    $sql = "DELETE FROM post WHERE idPost = :idPost";
+    $request = $bdd->prepare($sql);
+    $request->execute(array(":idPost" => $idPost));
+    
+    $bdd = connexionDB();
+    $sql = "DELETE FROM media WHERE idPost = :idPost";
+    $request = $bdd->prepare($sql);
+    $request->execute(array(":idPost" => $idPost));
+}
+
+
+
 
 
 
@@ -76,10 +85,6 @@ function getFirstNameById($idUser) {
     $info = $request->fetch(PDO::FETCH_ASSOC);
     return $info;
 }
-
-
-
-
  
  function userExists($firstName, $lastName, $idHobbie) {
     $bdd = connexionDB();
@@ -92,14 +97,6 @@ function getFirstNameById($idUser) {
         } else {
             return true;
         }
-}
-
-
-function delUser($idUser){
-    $bdd = connexionDB();
-    $sql = "DELETE FROM Users WHERE idUser = :idUser";
-    $request = $bdd->prepare($sql);
-    $request->execute(array(":idUser" => $idUser));
 }
 
 function getUserById($idUser){
